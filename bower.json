@@ -1,0 +1,8 @@
+{
+  "name": "agora-permissions",
+  "version": "0.0.1",
+  "main": "permissions-module.js",
+  "dependencies": {
+    "angular": "~1.4.0"
+  }
+}
