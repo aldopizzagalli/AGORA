@@ -1,0 +1,27 @@
+
+<div class="panel panel-default " ng-repeat="schema in permissionsTempCtrl.schemes">
+  <div id="agora_item_container">
+    <div class="agora_item_row">
+      <div class="agora_item_col agora_item_col__radio">
+        <input type="radio" id="schema_{{schema.name}}"  ng-model="permissionsTempCtrl.selectedSchema" ng-click="permissionsTempCtrl.setCurrentPermissionBySchema(schema)"  ng-value="schema.name" >
+      </div>
+      <div class="agora_item_col">
+        <div style="text-align: left; margin-bottom: 5px; ">
+          <label for="schema_{{schema.name}}">{{ 'WEB_PERMISSION_SCHEME_'+schema.name | translate}}</label>- {{ 'WEB_PERMISSION_SCHEME_DESC_'+schema.name | translate}}</span>
+        </div>
+
+        <div class="permission_item_small" tooltip="{{ 'WEB_PERMISSION_'+permission.level | translate}}" ng-repeat="permission in schema.items"
+             ng-class="{'lvl5' : (permission.level==5),
+                        'lvl4' : (permission.level==4),
+                        'lvl3' : (permission.level==3),
+                        'lvl2' : (permission.level==2),
+                        'lvl1' : (permission.level===1),
+                        'lvl0' : (permission.level===-1)}" >
+          <profile-image userid="{{permission.rid}}" short-name="{{permission.shortName}}" display-name="{{permission.displayName}}" user-type="{{permission.type}}" size="xs"  image-defined="true" ></profile-image>
+          {{permission.displayName}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

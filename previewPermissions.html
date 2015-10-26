@@ -1,0 +1,95 @@
+
+<div id="panel_permissionsPreview" class="slidePanel" >
+
+  <div class="modal-header small">
+    <div class="glyphicon glyphicon-eye_open iconModal"></div>
+    <h3>{{ 'WEB_PERMISSION_PREVIEW' | translate}}</h3>
+    <div ng-click="previewPermissionsCtrl.emitClosePannel()" class="circle closeModal">&times;</div>
+  </div>
+
+  <div class="modal-body" style="max-height: 300px; min-height: 150px; overflow: auto; padding-top: 10px; background: #fff; ">
+
+    <div data-ng-if="previewPermissionsCtrl.permissionsPreviewList">
+      <h5 style="line-height: 25px; border-bottom: 1px solid #ccc; padding: 2px 5px;  text-transform: uppercase; background: #f2f2f2;">{{ 'WEB_USER_TYPE_2_LIST' | translate}}</h5>
+      <ul style="list-style: none; margin-top: -10px; padding: 0px;   ">
+        <li ng-repeat="permission in internalUsers = (previewPermissionsCtrl.permissionsPreviewList | orderBy:'level':true  | filter: { subtype : 2})" style="height:35px; width: 100%;  line-height: 35px; border-bottom: 1px solid #f2f2f2; padding-left: 10px;">
+
+          <table style="width: 835px; ">
+            <tr>
+              <td style="width: 32px;"><profile-image userid="{{permission.rid}}" short-name="{{permission.shortName}}" display-name="{{permission.displayName}}" user-type="{{permission.type}}" size="xs"  image-defined="true"  ></profile-image></td>
+              <td style="width: 250px; text-align: left;"><span ng-bind-html="permission.displayName"></span></td>
+              <td style="text-align: right">
+                <div class="pull-right" style="text-transform: uppercase; font-weight: bold; padding-right: 20px; font-size: 0.9em"
+                     ng-class="{         'lvl0_text'   : (permission.level == -2 || permission.level == -1 || permission.level == 0),
+                                         'lvl1_text'   : permission.level == 1,
+                                         'lvl2_text'   : permission.level == 2,
+                                         'lvl3_text'   : permission.level == 3,
+                                         'lvl4_text'   : permission.level == 4,
+                                         'lvl5_text'   : permission.level == 5,
+                                         'disabled'    : permission.inheritance == -2}">
+                  <div ng-if="permission.type != 1" style="width: 150px;" >{{ 'WEB_PERMISSION_'+permission.level | translate}}</div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </li>
+
+      </ul>
+      <h5 style="line-height: 25px; border-bottom: 1px solid #ccc; padding: 2px 5px; text-transform: uppercase; background: #f2f2f2;">{{ 'WEB_USER_TYPE_3_LIST' | translate}}</h5>
+      <ul style="list-style: none; margin-top: -10px; padding: 0px; " >
+        <li ng-repeat="permission in externalUsers = (previewPermissionsCtrl.permissionsPreviewList | orderBy:'level':true  | filter: { subtype : 3})" style="height:35px; width: 100%; line-height: 35px; border-bottom: 1px solid #f2f2f2; padding-left: 10px;">
+
+          <table style="width: 835px; ">
+            <tr>
+              <td style="width: 32px;"><profile-image userid="{{permission.rid}}" short-name="{{permission.shortName}}" display-name="{{permission.displayName}}" user-type="{{permission.type}}" size="xs"  image-defined="true"  ></profile-image></td>
+              <td style="width: 250px; text-align: left;"><span ng-bind-html="permission.displayName"></span></td>
+              <td style="text-align: right">
+
+
+                <div class="pull-right" style="text-transform: uppercase; font-weight: bold; padding-right: 20px; font-size: 0.9em"
+                     ng-class="{         'lvl0_text'   : (permission.level == -2 || permission.level == -1 || permission.level == 0),
+                                         'lvl1_text'   : permission.level == 1,
+                                         'lvl2_text'   : permission.level == 2,
+                                         'lvl3_text'   : permission.level == 3,
+                                         'lvl4_text'   : permission.level == 4,
+                                         'lvl5_text'   : permission.level == 5,
+                                         'disabled'    : permission.inheritance == -2}">
+                  <div ng-if="permission.type != 1" style="width: 150px;" >{{ 'WEB_PERMISSION_'+permission.level | translate}}</div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </li>
+        <li style="margin-top: 10px;">
+          <div class="alert alert-warning"  style="margin-bottom: 10px; margin-top: 10px;"  data-ng-if="externalUsers.length==0" role="alert" >
+            {{ 'WEB_PERMISSION_EXTERNAL_EMPTY'   | translate}}
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div data-ng-if="!previewPermissionsCtrl.permissionsPreviewList">
+      <div class="spinner_small_dark"></div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

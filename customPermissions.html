@@ -1,0 +1,237 @@
+
+<ul class="list-group permissions_list"  >
+
+
+  <li class="list-group-item clearfix" style="border-radius: 4px; padding: 0px 5px; padding-bottom: 0px !important ">
+    <div class="row permissions_list--title" >
+      <div class="col-md-10 col-sm-10 col-xs-10"><a>{{ 'WEB_USER_TYPE_2_LIST' | translate}}</a></div>
+      <div class="col-md-2 col-sm-2 col-xs-2 ">
+        <div class="input-group-btn permissions_list--item--line pull-right permissions_list--item-add-button"     data-ng-if="!permissionsCtrl.newPermissionsItem">
+          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;"
+                  data-ng-click="permissionsCtrl.showTooltip(permissionsCtrl.permissions.selection.items)">
+            {{ 'WEB_ACTIONS_ADD' | translate}}
+            <span class="caret"></span></button>
+          <ul class="dropdown-menu permissions_list--item-tooltip" style="padding: 0px !important">
+            <permission-tooltip type="0"  ></permission-tooltip>
+          </ul>
+        </div><!-- /btn-group -->
+
+      </div>
+    </div>
+    <ul class="list-group" style="margin: 5px; padding: 5px;" >
+      <li class="list-group-item clearfix permissions_list--item agora-list-group-item" data-ng-repeat="permissionItem in internal_filtered = (permissionsCtrl.permissions.selection.items | filter: {inUse : true} )" data-ng-if="permissionItem.subtype == 2 || permissionItem.subtype == 5">
+
+        <div class="pull-left permissions_list--item--line agora-list-group-item__10" style=" padding-right: 10px; margin-right: 10px; border-right: 1px solid #ccc;">
+          <button type="button" class="btn btn-default btn-xs btn-action dropdown-toggle" data-toggle="dropdown" ng-disabled="permissionItem.inheritance==2">&nbsp;&nbsp;
+            <i class="glyphicon"
+               ng-class="{ 'glyphicon-lock'   : (permissionItem.inheritance==1 || permissionItem.inheritance==2),
+                                 'glyphicon-unlock' : (permissionItem.inheritance==0 || permissionItem.inheritance === undefined),
+                                 'glyphicon-ban'    : (permissionItem.inheritance==-1)}"></i>
+            &nbsp;&nbsp;<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li  ng-click="permissionsCtrl.unpdateInheritance(permissionItem, 0)"><a href=""><i class="glyphicon glyphicon-unlock"></i>&nbsp;{{ 'WEB_PERMISSION_INHERITANCE_0' | translate}}</a></li>
+            <li  ng-click="permissionsCtrl.unpdateInheritance(permissionItem, 1)"><a href=""><i class="glyphicon glyphicon-lock"></i>&nbsp;{{ 'WEB_PERMISSION_INHERITANCE_1' | translate}}</a></li>
+            <li  ng-click="permissionsCtrl.unpdateInheritance(permissionItem, -1)"><a href=""><i class="glyphicon glyphicon-ban"></i>&nbsp;{{ 'WEB_PERMISSION_INHERITANCE_-1' | translate}}</a></li>
+          </ul>
+        </div>
+
+        <div class="agora-list-group-item__10">
+          <profile-image userid="{{permissionItem.rid}}" short-name="{{permissionItem.shortName}}" display-name="{{permissionItem.displayName}}" user-type="{{permissionItem.type}}" size="sm"  image-defined="true" ></profile-image>
+        </div>
+        <div class="agora-list-group-item__45 permissions_list--item--line "  >
+          {{permissionItem.displayName}}
+        </div>
+        <div class=" agora-list-group-item__20">
+          <div class="input-group-btn permissions_list--item--line" >
+            <div type="button" class="permission_item_small onlyRule " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                 ng-class="{'lvl5' : (permissionItem.level==5),
+                                         'lvl4' : (permissionItem.level==4),
+                                         'lvl3' : (permissionItem.level==3),
+                                         'lvl2' : (permissionItem.level==2),
+                                         'lvl1' : (permissionItem.level===1),
+                                         'lvl0' : (permissionItem.level===-1)}" >
+              {{ 'WEB_PERMISSION_'+permissionItem.level | translate}}&nbsp;<span ng-if="permissionItem.inheritance!=2" class="caret"></span></div>
+            <ul class="dropdown-menu" ng-if="permissionItem.inheritance!=2">
+              <li data-ng-repeat="level in permissionsCtrl.permissions.levels | orderBy:'value':true">
+                <a data-ng-click="permissionsCtrl.setPermissionVal(permissionItem, level.value)"    >
+                  <table>
+                    <tr>
+                      <td >
+                                  <span class="badge"
+                                        data-ng-class="{'lvl5': level.value == 5, 'lvl4': level.value == 4, 'lvl3': level.value == 3, 'lvl2': level.value == 2, 'lvl1': level.value == 1, 'lvl0': level.value == -1}" >&nbsp;</span>
+                      </td>
+                      <td><strong>{{ 'WEB_PERMISSION_'+level.value   | translate}}</strong></td>
+                    </tr>
+                    <tr class="hidden-xs">
+                      <td></td>
+                      <td><span style="font-size: 0.8em;">{{ 'WEB_PERMISSION_DETAIL_'+level.value   | translate}}</span></td>
+                    </tr>
+                  </table>
+                </a>
+              </li>
+            </ul>
+          </div><!-- /btn-group -->
+        </div>
+        <div class="agora-list-group-item__10 permissions_list--item--line"  data-ng-if="permissionItem.inheritance != 2">
+          <a href="" data-ng-click="permissionsCtrl.removeItem(permissionItem)" class="pull-right"><span class="ion ion-close-round"></span> </a>
+        </div>
+
+      </li>
+
+      <li class="list-group-item clearfix permissions_list--item agora-list-group-item" data-ng-if="(permissionsCtrl.permissions.selection.items | filter: { subtype : 1}).length>0" data-ng-repeat="permissionItem in community_filtered = (permissionsCtrl.permissions.selection.items | filter: { subtype : 1, inUse : true})" style="background: #f2f2f2; border: 1px solid #ccc; margin-top: 10px;">
+
+        <div class="pull-left permissions_list--item--line agora-list-group-item__10" style=" padding-right: 10px; margin-right: 10px; border-right: 1px solid #ccc;">
+          <button type="button" class="btn btn-default btn-xs btn-action dropdown-toggle" data-toggle="dropdown" ng-disabled="permissionItem.inheritance==2" >&nbsp;&nbsp;
+            <i class="glyphicon"
+               ng-class="{ 'glyphicon-lock'   : (permissionItem.inheritance==1 || permissionItem.inheritance==2),
+                                 'glyphicon-unlock' : (permissionItem.inheritance==0 || permissionItem.inheritance === undefined),
+                                 'glyphicon-ban'    : (permissionItem.inheritance==-1)}"></i>
+            &nbsp;&nbsp;<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li  ng-click="permissionsCtrl.unpdateInheritance(permissionItem, 0)"><a href=""><i class="glyphicon glyphicon-unlock"></i>&nbsp;{{ 'WEB_PERMISSION_INHERITANCE_0' | translate}}</a></li>
+            <li  ng-click="permissionsCtrl.unpdateInheritance(permissionItem, 1)"><a href=""><i class="glyphicon glyphicon-lock"></i>&nbsp;{{ 'WEB_PERMISSION_INHERITANCE_1' | translate}}</a></li>
+            <li  ng-click="permissionsCtrl.unpdateInheritance(permissionItem, -1)"><a href=""><i class="glyphicon glyphicon-ban"></i>&nbsp;{{ 'WEB_PERMISSION_INHERITANCE_-1' | translate}}</a></li>
+          </ul>
+
+        </div>
+        <div class="agora-list-group-item__10">
+          <profile-image userid="{{permissionItem.rid}}"  user-type="{{permissionItem.type}}" size="sm"   ></profile-image>
+        </div>
+        <div class="agora-list-group-item__45 permissions_list--item--line" >
+          {{ 'WEB_PERMISSION_COMMUNITY' | translate}}
+        </div>
+        <div class=" agora-list-group-item__20">
+          <div class="input-group-btn permissions_list--item--line" >
+            <div type="button" class="permission_item_small onlyRule " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                 ng-class="{'lvl5' : (permissionItem.level==5),
+                                         'lvl4' : (permissionItem.level==4),
+                                         'lvl3' : (permissionItem.level==3),
+                                         'lvl2' : (permissionItem.level==2),
+                                         'lvl1' : (permissionItem.level===1),
+                                         'lvl0' : (permissionItem.level===-1)}" >
+              {{ 'WEB_PERMISSION_'+permissionItem.level | translate}}&nbsp;<span ng-if="permissionItem.inheritance!=2" class="caret"></span></div>
+            <ul class="dropdown-menu" ng-if="permissionItem.inheritance!=2">
+
+              <li data-ng-repeat="level in permissionsCtrl.permissions.levels | orderBy:'value':true">
+                <a data-ng-click="permissionsCtrl.setPermissionVal(permissionItem, level.value)"    >
+                  <table>
+                    <tr>
+                      <td >
+                                  <span class="badge"
+                                        data-ng-class="{'lvl5': level.value == 5, 'lvl4': level.value == 4, 'lvl3': level.value == 3, 'lvl2': level.value == 2, 'lvl1': level.value == 1, 'lvl0': level.value == -1}" >&nbsp;</span>
+                      </td>
+                      <td><strong>{{ 'WEB_PERMISSION_'+level.value   | translate}}</strong></td>
+                    </tr>
+                    <tr class="hidden-xs">
+                      <td></td>
+                      <td><span style="font-size: 0.8em;">{{ 'WEB_PERMISSION_DETAIL_'+level.value   | translate}}</span></td>
+                    </tr>
+                  </table>
+                </a>
+              </li>
+            </ul>
+          </div><!-- /btn-group -->
+        </div>
+        <div class="agora-list-group-item__10 permissions_list--item--line"   data-ng-if="permissionItem.inheritance != 2">
+          <a href="" data-ng-click="permissionsCtrl.removeItem(permissionItem)" class="pull-right"><span class="ion ion-close-round"></span> </a>
+        </div>
+
+      </li>
+    </ul>
+    <div class="alert alert-info"  style="margin-bottom: 10px;"  data-ng-if="(permissionsCtrl.permissions.selection.items | filter: { subtype : 1}).length>0 && community_filtered.length==0" role="alert" >
+      <a href="" data-ng-click="permissionsCtrl.addItem((permissionsCtrl.permissions.selection.items | filter: { subtype : 1})[0])">
+        {{ 'WEB_PERMISSION_ADD_ALL_INTERNAL_USERS'   | translate}}
+      </a>
+    </div>
+  </li>
+
+  <li class="list-group-item clearfix" style="border-radius: 4px; padding: 0px 5px; margin-top: 10px; " data-ng-if="(permissionsCtrl.permissions.selection.items | filter: { subtype : (3 || 4)}).length>0">
+    <div class="row permissions_list--title">
+      <div class="col-md-10 col-sm-10 col-xs-10 "><a>{{ 'WEB_USER_TYPE_3_LIST' | translate}}</a></div>
+      <div class="col-md-2 col-sm-2 col-xs-2 ">
+        <div class="input-group-btn permissions_list--item--line pull-right permissions_list--item-add-button"   data-ng-if="!permissionsCtrl.newPermissionsItem">
+          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;"
+                  data-ng-click="permissionsCtrl.showTooltip(permissionsCtrl.permissions.selection.items)">
+            {{ 'WEB_ACTIONS_ADD' | translate}}
+            <span class="caret"></span></button>
+          <ul class="dropdown-menu permissions_list--item-tooltip" >
+            <permission-tooltip type="1" ></permission-tooltip>
+          </ul>
+        </div><!-- /btn-group -->
+
+      </div>
+    </div>
+
+    <ul class="list-group" style="margin: 5px; padding: 5px;" >
+      <li class="list-group-item clearfix permissions_list--item agora-list-group-item" data-ng-repeat="permissionItem in external_filtered = (permissionsCtrl.permissions.selection.items | filter: {inUse : true})" data-ng-if="permissionItem.subtype == 3 || permissionItem.subtype == 4">
+
+        <div class="pull-left permissions_list--item--line agora-list-group-item__10" style=" padding-right: 10px; margin-right: 10px; border-right: 1px solid #ccc;">
+          <button type="button" class="btn btn-default btn-xs btn-action dropdown-toggle" data-toggle="dropdown" ng-disabled="permissionItem.inheritance==2">&nbsp;&nbsp;
+            <i class="glyphicon"
+               ng-class="{ 'glyphicon-lock'   : (permissionItem.inheritance==1 || permissionItem.inheritance==2),
+                                 'glyphicon-unlock' : (permissionItem.inheritance==0 || permissionItem.inheritance === undefined),
+                                 'glyphicon-ban'    : (permissionItem.inheritance==-1)}"></i>
+            &nbsp;&nbsp;<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li  ng-click="permissionsCtrl.unpdateInheritance(permissionItem, 0)"><a href=""><i class="glyphicon glyphicon-unlock"></i>&nbsp;{{ 'WEB_PERMISSION_INHERITANCE_0' | translate}}</a></li>
+            <li  ng-click="permissionsCtrl.unpdateInheritance(permissionItem, 1)"><a href=""><i class="glyphicon glyphicon-lock"></i>&nbsp;{{ 'WEB_PERMISSION_INHERITANCE_1' | translate}}</a></li>
+            <li  ng-click="permissionsCtrl.unpdateInheritance(permissionItem, -1)"><a href=""><i class="glyphicon glyphicon-ban"></i>&nbsp;{{ 'WEB_PERMISSION_INHERITANCE_-1' | translate}}</a></li>
+          </ul>
+        </div>
+        <div class="agora-list-group-item__10">
+          <profile-image userid="{{permissionItem.rid}}" short-name="{{permissionItem.shortName}}" display-name="{{permissionItem.displayName}}" user-type="{{permissionItem.type}}" size="sm"  image-defined="true" ></profile-image>
+        </div>
+        <div class="agora-list-group-item__45 permissions_list--item--line" >
+          {{permissionItem.displayName}}
+        </div>
+        <div class="agora-list-group-item__20">
+          <div class="input-group-btn permissions_list--item--line" >
+            <div type="button" class="permission_item_small onlyRule " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                 ng-class="{'lvl5' : (permissionItem.level==5),
+                                         'lvl4' : (permissionItem.level==4),
+                                         'lvl3' : (permissionItem.level==3),
+                                         'lvl2' : (permissionItem.level==2),
+                                         'lvl1' : (permissionItem.level===1),
+                                         'lvl0' : (permissionItem.level===-1)}" >
+              {{ 'WEB_PERMISSION_'+permissionItem.level | translate}}&nbsp;<span ng-if="permissionItem.inheritance!=2" class="caret"></span></div>
+            <ul class="dropdown-menu" ng-if="permissionItem.inheritance!=2">
+              <!--<li><a data-ng-click="permissionsCtrl.setPermissionVal(permissionItem, 5)"    >-->
+              <!--<strong>{{ 'WEB_PERMISSION_5'   | translate}}</strong>&nbsp;<span class="badge lvl5" >&nbsp;</span><br>-->
+              <!--<span style="font-size: 0.8em;">{{ 'WEB_PERMISSION_DETAIL_5'   | translate}}</span></a>-->
+              <!--</li>-->
+
+
+              <li data-ng-repeat="level in permissionsCtrl.permissions.levels | orderBy:'value':true"
+                  ng-show="(level.value<4 || (level.value>3 && (permissionItem.type == 2 && (permissionsCtrl.permissions.rootParent.rid == permissionItem.rid))))">
+                <a data-ng-click="permissionsCtrl.setPermissionVal(permissionItem, level.value)"    >
+                  <table>
+                    <tr>
+                      <td >
+                                  <span class="badge"
+                                        data-ng-class="{'lvl5': level.value == 5, 'lvl4': level.value == 4, 'lvl3': level.value == 3, 'lvl2': level.value == 2, 'lvl1': level.value == 1, 'lvl0': level.value == -1}" >&nbsp;</span>
+                      </td>
+                      <td><strong>{{ 'WEB_PERMISSION_'+level.value   | translate}}</strong></td>
+                    </tr>
+                    <tr class="hidden-xs">
+                      <td></td>
+                      <td><span style="font-size: 0.8em;">{{ 'WEB_PERMISSION_DETAIL_'+level.value   | translate}}</span></td>
+                    </tr>
+                  </table>
+                </a>
+              </li>
+            </ul>
+          </div><!-- /btn-group -->
+        </div>
+        <div class="agora-list-group-item__10 permissions_list--item--line"   data-ng-if="permissionItem.inheritance != 2">
+          <a href="" data-ng-click="permissionsCtrl.removeItem(permissionItem)" class="pull-right"><span class="ion ion-close-round"></span> </a>
+        </div>
+      </li>
+    </ul>
+    <div class="alert alert-warning"  style="margin-bottom: 10px;"   data-ng-if="permissionsCtrl.externalInUser.length==0" role="alert">{{ 'WEB_PERMISSION_EXTERNAL_EMPTY'   | translate}}</div>
+  </li>
+</ul>
+
+</div>

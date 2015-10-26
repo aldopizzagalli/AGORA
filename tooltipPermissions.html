@@ -1,0 +1,26 @@
+<tabset justified="true"  style="padding: 0px !important;  margin: 0px !important; max-height: 345px; overflow: hidden;">
+  <tab heading="{{ 'WEB_USER_LIST' | translate}}" ng-click="$event.stopPropagation()" ng-if="(tooltipPermissionsCtrl.permissionsList_tooltip | filter:{type : 2}).length>0"  style="padding: 0px !important;  margin: 0px !important; " >
+    <ul style="max-height: 300px; overflow: auto; margin: 0px; padding: 0px; border: none; margin-top: -10px;"class="list-item-group" >
+      <li class="pull-left list-item"
+          data-ng-repeat="item in tooltipPermissionsCtrl.permissionsList_tooltip | filter:{type : 2}"
+          data-ng-click="tooltipPermissionsCtrl.addItem(item)"
+          data-ng-class="{'list-item--disabled': item.inUse}" >
+        <profile-image userid="{{item.rid}}" short-name="{{item.shortName}}" display-name="{{item.displayName}}" user-type="{{item.type}}" size="xs"  image-defined="true" ></profile-image>
+        {{item.displayName}}
+      </li>
+    </ul>
+  </tab>
+  <tab heading="{{ 'WEB_GROUP_LIST' | translate}}" ng-click="$event.stopPropagation()" ng-if="(tooltipPermissionsCtrl.permissionsList_tooltip | filter:{type : 3}).length>0" >
+    <ul style="max-height: 300px; overflow: auto; margin: 0px; padding: 0px; border: none; margin-top: -10px;" class="list-item-group" >
+      <li class="pull-left list-item"
+          data-ng-repeat="item in tooltipPermissionsCtrl.permissionsList_tooltip | filter:{type : 3}"
+          data-ng-click="tooltipPermissionsCtrl.addItem(item)"
+          data-ng-class="{'list-item--disabled': item.inUse}">
+        <profile-image userid="{{item.rid}}" short-name="{{item.shortName}}" display-name="{{item.displayName}}" user-type="{{item.type}}" size="xs"  image-defined="true" ></profile-image>
+        {{item.displayName}}
+      </li>
+    </ul>
+  </tab>
+</tabset>
+
+
