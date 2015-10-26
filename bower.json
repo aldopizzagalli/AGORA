@@ -1,8 +1,34 @@
 {
-  "name": "agora-permissions",
-  "version": "0.0.1",
-  "main": "permissions-module.js",
+  "name": "y",
+  "version": "y",
+  "main": "y",
   "dependencies": {
     "angular": "~1.4.0"
-  }
+  },
+  "homepage": "y",
+  "authors": [
+    "y"
+  ],
+  "description": "AGORA SecureWare SA  manage Permissions",
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node",
+    "yui"
+  ],
+  "keywords": [
+    "agora",
+    "permissions"
+  ],
+  "license": "y",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ]
 }
